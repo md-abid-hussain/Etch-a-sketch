@@ -15,13 +15,21 @@
     </header>
     <main>
         <div class="inputContainer">
-            <div></label><input type="color" id="colorpalet">
-                <label for="colorpalet">Select color
-            </div>
-            <button id="changeGrid">Change block</button>
-            <div>
-                <input type="range" min="1" max="64" id="blockRange" value="16"><span id="rangeValue"> 16</span>
-            </div>
+            <fieldset>
+                <legend>Color</legend>
+                <div class="color-section">
+                    <label for="colorpalet">Select color</label>
+                    <input type="color" id="colorpalet">
+                </div>
+                <button id="random">Toggle Random</button>
+            </fieldset>
+            <button id="clear">Clear canvas</button>
+            <fieldset>
+                <legend>Number of blocks</legend>
+                <div class="no-blocks">
+                    <input type="range" min="1" max="64" id="blockRange" value="16"><span id="rangeValue"> 16</span>
+                </div>
+            </fieldset>
         </div>
         <section class="container" id="container">
 

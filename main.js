@@ -2,15 +2,23 @@
 const initApp = () => {
 
     const container = document.getElementById('container')
-    const changeGridButton = document.getElementById('changeGrid')
     const colorpalete = document.getElementById('colorpalet')
     const blockRange = document.getElementById('blockRange')
     const rangeValue = document.getElementById('rangeValue')
+    const clearCanvas = document.getElementById('clear')
+    const toggleRandom = document.getElementById('random')
+
+    let randomColor = false
     let numberOfBlocks = 16
     let color = 'black'
 
+    const getRandomColor = () => {
+        const randomNumber = () => Math.floor(Math.random() * 256)
+        return `#${randomNumber()}${randomNumber()}${randomNumber()}`
+    }
+
     const onHover = (e) => {
-        e.target.style.backgroundColor = color
+        e.target.style.backgroundColor = randomColor ? getRandomColor() : color
     }
 
     const generateCanvas = (numberOfBlocks, onHover) => {
@@ -35,36 +43,28 @@ const initApp = () => {
     blockRange.addEventListener('change', (e) => {
         removeOldCanvas(container)
         rangeValue.innerText = e.target.value
-        generateCanvas(Number(e.target.value), onHover)
+        numberOfBlocks = Number(e.target.value)
+        generateCanvas(numberOfBlocks, onHover)
     })
 
     colorpalete.addEventListener('change', (e) => {
         color = e.target.value
     })
 
-    changeGridButton.addEventListener('click', () => {
-        numberOfBlocks = prompt('Enter number of block\nIt should be integer and greater than 0')
-        try {
-            numberOfBlocks = BigInt(numberOfBlocks)
-            if (numberOfBlocks <= 0 || numberOfBlocks > 64) {
-                throw new Error('Enter number greater than 0 and less than 64')
-            }
-            console.log(numberOfBlocks)
-            removeOldCanvas(container)
-            generateCanvas(Number(numberOfBlocks), onHover)
-        } catch (err) {
-            alert(err.message)
-            return
-        }
-    })
-
-
     const removeOldCanvas = (container) => {
-        console.log(container.childNodes)
         while (container.firstChild) {
             container.firstChild.remove()
         }
     }
+
+    clearCanvas.addEventListener('click', () => {
+        removeOldCanvas(container)
+        generateCanvas(numberOfBlocks, onHover)
+    })
+
+    toggleRandom.addEventListener('click', () => {
+        randomColor = !randomColor
+    })
 }
 
 document.addEventListener("DOMContentLoaded", initApp);
